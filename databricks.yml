@@ -11,18 +11,8 @@ include:
   - resources/*/*.yml
   - resources/*/*/*.yml
 
-# Development mode prefixes names, pauses schedules, and isolates each developer's copy.
-# Production-mode targets below deploy as the CI/CD service principal only.
+# Every target deploys in production mode as the CI/CD service principal.
 targets:
-  dev:
-    mode: development
-    default: true
-    workspace:
-      host: https://fevm-csong-demo.cloud.databricks.com
-    variables:
-      environment: dev
-      catalog: meijer_lab_int
-
   int:
     mode: production
     workspace:
