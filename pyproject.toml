@@ -1,0 +1,12 @@
+[tool.ruff]
+line-length = 130
+target-version = "py311"
+# Databricks notebooks and pipeline modules get spark, dbutils, display injected at runtime.
+builtins = ["spark", "dbutils", "display"]
+extend-exclude = ["devops/lab_setup"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["expectations", "store_kpi_logic"]

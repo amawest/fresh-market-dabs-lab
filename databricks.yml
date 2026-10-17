@@ -1,0 +1,72 @@
+# Root bundle: targets, includes, workspace config.
+# Owned by DevOps / platform (see .github/CODEOWNERS). Developers add files under
+# resources/ and src/; they should not need to edit this file.
+bundle:
+  name: meijer_dabs_lab
+  engine: direct # Required for genie_spaces; also no Terraform dependency.
+
+include:
+  # resources/*.yml, resources/<type>/*.yml, and resources/<type>/<domain>/*.yml
+  - resources/*.yml
+  - resources/*/*.yml
+  - resources/*/*/*.yml
+
+# Development mode prefixes names, pauses schedules, and isolates each developer's copy.
+# Production-mode targets below deploy as the CI/CD service principal only.
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://fevm-csong-demo.cloud.databricks.com
+    variables:
+      environment: dev
+      catalog: meijer_lab_int
+
+  int:
+    mode: production
+    workspace:
+      host: https://fevm-csong-demo.cloud.databricks.com
+      root_path: /Workspace/Users/${var.cicd_service_principal}/.bundle/${bundle.name}/${bundle.target}
+    run_as:
+      service_principal_name: ${var.cicd_service_principal}
+    permissions:
+      - level: CAN_MANAGE
+        service_principal_name: ${var.cicd_service_principal}
+      - level: CAN_VIEW
+        group_name: users
+    variables:
+      environment: int
+      catalog: meijer_lab_int
+
+  cert:
+    mode: production
+    workspace:
+      host: https://fevm-csong-demo.cloud.databricks.com
+      root_path: /Workspace/Users/${var.cicd_service_principal}/.bundle/${bundle.name}/${bundle.target}
+    run_as:
+      service_principal_name: ${var.cicd_service_principal}
+    permissions:
+      - level: CAN_MANAGE
+        service_principal_name: ${var.cicd_service_principal}
+      - level: CAN_VIEW
+        group_name: users
+    variables:
+      environment: cert
+      catalog: meijer_lab_cert
+
+  prod:
+    mode: production
+    workspace:
+      host: https://fevm-csong-demo.cloud.databricks.com
+      root_path: /Workspace/Users/${var.cicd_service_principal}/.bundle/${bundle.name}/${bundle.target}
+    run_as:
+      service_principal_name: ${var.cicd_service_principal}
+    permissions:
+      - level: CAN_MANAGE
+        service_principal_name: ${var.cicd_service_principal}
+      - level: CAN_VIEW
+        group_name: users
+    variables:
+      environment: prod
+      catalog: meijer_lab_prod

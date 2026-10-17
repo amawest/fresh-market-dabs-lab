@@ -1,0 +1,10 @@
+# Store performance dashboard, shipped with the tables it reads. Queries use bare table names;
+# dataset_catalog / dataset_schema point them at this target's catalog and schema.
+resources:
+  dashboards:
+    so_store_performance:
+      display_name: Store Performance (${var.environment})
+      file_path: ../../../src/store_ops/dashboards/store_performance.lvdash.json
+      warehouse_id: ${var.warehouse_id}
+      dataset_catalog: ${var.catalog}
+      dataset_schema: ${resources.schemas.so_store_ops.name}

@@ -1,0 +1,8 @@
+# Output schema for the store_ops domain. In dev mode this becomes dev_<user>_store_ops,
+# so every developer gets an isolated copy of every table.
+resources:
+  schemas:
+    so_store_ops:
+      catalog_name: ${var.catalog}
+      name: store_ops
+      comment: Store operations sales and KPI tables. Managed by the meijer_dabs_lab bundle.

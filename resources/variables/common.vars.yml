@@ -1,0 +1,22 @@
+# Bundle-wide variables (no domain prefix). Shared by every domain.
+variables:
+  environment:
+    description: Short environment name used in display names (dev, int, cert, prod).
+  catalog:
+    description: Unity Catalog catalog for this target. Never hard-code catalog names in resources or src.
+  notification_email:
+    description: Distribution list that receives job failure notifications. Must be a group, never an individual.
+    default: store-ops-oncall@example.com
+  cost_center:
+    description: Cost center tag applied to every job and pipeline.
+    default: edaa-lab
+  cicd_service_principal:
+    description: Application ID of the CI/CD service principal that owns and runs int, cert, and prod.
+    default: fed96b3b-5e9f-4a70-8e9d-d712ff9d2204
+  warehouse_id:
+    description: SQL warehouse for dashboards and Genie spaces, resolved by name so no IDs are hard-coded.
+    lookup:
+      warehouse: Serverless Starter Warehouse
+  landing_path:
+    description: Upstream POS landing zone. Owned by the source system, not this bundle.
+    default: /Volumes/${var.catalog}/landing/raw

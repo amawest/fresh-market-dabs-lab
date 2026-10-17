@@ -1,0 +1,28 @@
+# DevOps-owned: runs the CI rule checks against the files you just deployed.
+# Deploy your dev copy, run this job, and fix anything it flags before you open a pull request.
+resources:
+  jobs:
+    admin_rule_checks:
+      name: ${bundle.name}_${var.environment}_admin_rule_checks
+      description: Same bundle rule checks that CI runs on every pull request.
+      tags:
+        domain: admin
+        cost_center: ${var.cost_center}
+      email_notifications:
+        on_failure:
+          - ${var.notification_email}
+      tasks:
+        - task_key: rule_checks
+          environment_key: checks
+          spark_python_task:
+            python_file: ../../../devops/checks/run_rule_checks.py
+            parameters:
+              - ${workspace.file_path}
+      environments:
+        - environment_key: checks
+          spec:
+            environment_version: "4"
+            dependencies:
+              - pytest
+              - pyyaml
+              - sqlglot

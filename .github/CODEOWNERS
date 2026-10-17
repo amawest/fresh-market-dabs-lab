@@ -1,0 +1,7 @@
+# DevOps / platform own the guardrails. Changes here need their approval.
+/databricks.yml                 @christinasong97
+/resources/variables/           @christinasong97
+/.github/                       @christinasong97
+/tests/bundle/                  @christinasong97
+/devops/                        @christinasong97
+/.assistant_workspace_instructions.md @christinasong97
