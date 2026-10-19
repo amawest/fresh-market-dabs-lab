@@ -80,9 +80,9 @@ show_file("resources/genie_spaces/store_ops/so_store_ops_genie.genie_space.yml")
 dash = find_dev_dashboard()
 space = find_dev_genie_space()
 if dash:
-    link(f"/dashboardsv3/{dash.dashboard_id}/published", f"📊 {dash.display_name}")
+    link(f"/dashboardsv3/{dash['id']}/published", f"📊 {dash['name']}")
 if space:
-    link(f"/genie/rooms/{space.space_id}", f"💬 {space.title}")
+    link(f"/genie/rooms/{space['id']}", f"💬 {space['name']}")
 if not space:
     print("No Genie space yet: run the cell in 4.3, then deploy again.")
 
