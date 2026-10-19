@@ -256,16 +256,27 @@ def find_dev_genie_space():
 
 
 def ask_genie(question):
+    """Ask your dev Genie space a question and print the SQL it wrote and its answer."""
     space = find_dev_genie_space()
     if space is None:
-        print("❌ No dev Genie space yet. Deploy the bundle first.")
+        print("❌ No dev Genie space yet. Run the cell in 4.3, then deploy again.")
         return
-    msg = w.genie.start_conversation_and_wait(space["id"], question)
-    for att in msg.attachments or []:
-        if att.query:
-            print("SQL Genie wrote:\n  " + att.query.query.replace("\n", "\n  "))
-        if att.text:
-            print("\n" + att.text.content)
+    base = f"/api/2.0/genie/spaces/{space['id']}"
+    started = w.api_client.do("POST", f"{base}/start-conversation", body={"content": question})
+    path = f"{base}/conversations/{started['conversation_id']}/messages/{started['message_id']}"
+    for _ in range(60):
+        msg = w.api_client.do("GET", path)
+        if msg.get("status") in ("COMPLETED", "FAILED", "CANCELLED"):
+            break
+        time.sleep(3)
+    if msg.get("status") != "COMPLETED":
+        print(f"❌ Genie didn't finish ({msg.get('status')}). Try asking in the Genie space itself.")
+        return
+    for att in msg.get("attachments") or []:
+        if att.get("query"):
+            print("SQL Genie wrote:\n  " + att["query"]["query"].replace("\n", "\n  "))
+        if att.get("text"):
+            print("\n" + att["text"]["content"])
 
 
 print(f"Helpers loaded for {ME}")
