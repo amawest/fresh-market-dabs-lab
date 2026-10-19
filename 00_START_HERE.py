@@ -1,4 +1,8 @@
 # Databricks notebook source
+# /// script
+# [tool.databricks.environment]
+# environment_version = "6"
+# ///
 # MAGIC %md
 # MAGIC # Welcome: CI/CD with Declarative Automation Bundles
 # MAGIC
@@ -86,12 +90,13 @@
 
 # COMMAND ----------
 
+# DBTITLE 1,Step 1 · Set up the lab environment
 import os
 
 from databricks.sdk import WorkspaceClient
 
 PREFIX = "fresh_market_lab"
-WAREHOUSE = f"{PREFIX}_warehouse"
+WAREHOUSE = "Serverless Starter Warehouse"
 LEGACY_JOB = "Job_02_PL_Store_KPI_Alerts"
 INSTRUCTIONS = "/Workspace/.assistant_workspace_instructions.md"
 
