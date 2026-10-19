@@ -95,7 +95,11 @@ def rule_checks():
         return
     logs = w.jobs.get_run_output(run.tasks[0].run_id).logs or ""
     logs = re.sub(r"\x1b\[[0-9;]*m", "", logs)
-    results = dict(re.findall(r"::(test_\w+)(?:\[[^\]]*\])? (PASSED|FAILED|SKIPPED)", logs))
+    results = {}
+    for test, result in re.findall(r"::(test_\w+)(?:\[[^\]]*\])? (PASSED|FAILED|SKIPPED)", logs):
+        # Parameterized tests appear once per target; any failure counts as a failure.
+        if results.get(test) != "FAILED":
+            results[test] = result
     if not results:
         print("Couldn't read the results. Open the job run to see the output.")
         return
@@ -107,8 +111,9 @@ def rule_checks():
     if failed:
         print(f"{len(failed)} rule(s) failed. Details:")
         for line in logs.splitlines():
-            if line.startswith("E  ") and ("must" in line or ".yml" in line or ".py:" in line or "->" in line):
-                print("   " + line[1:].strip())
+            text = line[1:].strip()
+            if line.startswith("E ") and text and not text.startswith(("assert ", "+", "-", "where")):
+                print("   " + text.replace("AssertionError: ", ""))
     else:
         print("All rules pass. This change would clear CI.")
 
@@ -126,7 +131,7 @@ def expect_files(paths):
         exists = _exists(p)
         ok &= exists
         print(f"{'✅' if exists else '❌'} {p}")
-    return ok
+    print("\nAll there." if ok else "\nSomething is missing. Check the step above, or use the Catch up cell at the end.")
 
 
 def show_file(rel):
