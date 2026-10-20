@@ -1,4 +1,8 @@
 # Databricks notebook source
+# /// script
+# [tool.databricks.environment]
+# environment_version = "6"
+# ///
 # MAGIC %md
 # MAGIC # Module 4 · Your own development target (15 min)
 # MAGIC
@@ -52,6 +56,7 @@ display(spark.sql(f"SELECT * FROM `{CATALOG}`.`{schema}`.gold_store_alerts ORDER
 
 # COMMAND ----------
 
+# DBTITLE 1,4.3 · Add an agent to your bundle: the Genie space
 # MAGIC %md
 # MAGIC ## 4.3 · Add an agent to your bundle: the Genie space
 # MAGIC
@@ -59,12 +64,17 @@ display(spark.sql(f"SELECT * FROM `{CATALOG}`.`{schema}`.gold_store_alerts ORDER
 # MAGIC tables exist. Now that your orchestrator has built them, add **Store Ops Genie** to the bundle. Run the cell,
 # MAGIC look at the YAML, then **deploy again** (Deployments panel → `dev` → **Deploy**).
 # MAGIC
+# MAGIC ⚠️ Running the cell only **copies the YAML file** into your Git folder in Databricks — nothing new exists in
+# MAGIC the workspace yet. The Genie space itself is created **only when you deploy**. If you skip the deploy step,
+# MAGIC 4.4 will correctly say there is no Genie space.
+# MAGIC
 # MAGIC Notice how it names its tables: `${var.catalog}.${resources.schemas.so_store_ops.name}`. In dev it reads your
 # MAGIC schema; in prod it reads prod's. Its instructions and example SQL are code, reviewed in the same pull request
 # MAGIC as the tables they describe.
 
 # COMMAND ----------
 
+# DBTITLE 1,Catch up module 4
 catch_up(4)
 show_file("resources/genie_spaces/store_ops/so_store_ops_genie.genie_space.yml")
 
@@ -77,6 +87,7 @@ show_file("resources/genie_spaces/store_ops/so_store_ops_genie.genie_space.yml")
 
 # COMMAND ----------
 
+# DBTITLE 1,Find your dashboard and Genie space
 dash = find_dev_dashboard()
 space = find_dev_genie_space()
 if dash:

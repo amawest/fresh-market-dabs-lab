@@ -1,4 +1,8 @@
 # Databricks notebook source
+# /// script
+# [tool.databricks.environment]
+# environment_version = "6"
+# ///
 # MAGIC %md
 # MAGIC # Module 3 · Build the bundle with Genie Code (20 min)
 # MAGIC
@@ -99,11 +103,12 @@ rule_checks()
 
 # COMMAND ----------
 
+# DBTITLE 1,Catch up (only if you need to)
 # MAGIC %md
 # MAGIC ### Catch up (only if you need to)
 # MAGIC
 # MAGIC Behind, or Genie Code's pipeline won't validate? Remove the `#` and run this cell. It puts the finished module 3
-# MAGIC files in your Git folder (and module 2's, if you skipped it). Then redeploy `dev` and continue.
+# MAGIC files in your Git folder in Databricks (and module 2's, if you skipped it). Then redeploy `dev` and continue.
 
 # COMMAND ----------
 

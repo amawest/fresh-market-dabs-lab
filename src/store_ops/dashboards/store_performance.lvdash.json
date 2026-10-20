@@ -4,25 +4,21 @@
       "name": "ds_daily",
       "displayName": "Daily store sales",
       "queryLines": [
-        "SELECT sales_date, store_name, region, state, store_format, net_sales, transaction_count, daily_sales_target, rewards_share ",
-        "FROM gold_daily_store_sales"
+        "SELECT sales_date, store_name, region, state, store_format, net_sales, transaction_count, daily_sales_target, rewards_share FROM gold_daily_store_sales"
       ]
     },
     {
       "name": "ds_dept",
       "displayName": "Department sales",
       "queryLines": [
-        "SELECT sales_date, department, category, net_sales, units_sold ",
-        "FROM gold_department_sales"
+        "SELECT sales_date, department, category, net_sales, units_sold FROM gold_department_sales"
       ]
     },
     {
       "name": "ds_alerts",
       "displayName": "Store review list",
       "queryLines": [
-        "SELECT store_name, region, net_sales, target_sales, attainment_pct / 100 AS attainment, status, ",
-        "CASE WHEN status = 'UNDERPERFORMING' THEN 1 ELSE 0 END AS is_underperforming ",
-        "FROM gold_store_alerts ORDER BY attainment_pct"
+        "SELECT store_name, region, net_sales, target_sales, attainment_pct / 100 AS attainment, status, CASE WHEN status = 'UNDERPERFORMING' THEN 1 ELSE 0 END AS is_underperforming FROM gold_store_alerts ORDER BY attainment_pct"
       ]
     }
   ],
@@ -30,8 +26,6 @@
     {
       "name": "overview",
       "displayName": "Overview",
-      "pageType": "PAGE_TYPE_CANVAS",
-      "layoutVersion": "GRID_V1",
       "layout": [
         {
           "widget": {
@@ -346,6 +340,72 @@
         },
         {
           "widget": {
+            "name": "bar-sales-by-store-format",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "ds_daily",
+                  "fields": [
+                    {
+                      "name": "store_format",
+                      "expression": "`store_format`"
+                    },
+                    {
+                      "name": "sum(net_sales)",
+                      "expression": "SUM(`net_sales`)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "sum(net_sales)",
+                  "scale": {
+                    "type": "quantitative"
+                  },
+                  "displayName": "Net Sales",
+                  "format": {
+                    "type": "number-currency",
+                    "currencyCode": "USD",
+                    "abbreviation": "compact",
+                    "decimalPlaces": {
+                      "type": "max",
+                      "places": 1
+                    }
+                  }
+                },
+                "y": {
+                  "fieldName": "store_format",
+                  "scale": {
+                    "type": "categorical",
+                    "sort": {
+                      "by": "x-reversed"
+                    }
+                  },
+                  "displayName": "Store Format"
+                }
+              },
+              "frame": {
+                "showTitle": true,
+                "title": "Net Sales by Store Format"
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 11,
+            "width": 12,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
             "name": "table-store-review",
             "queries": [
               {
@@ -446,12 +506,14 @@
           },
           "position": {
             "x": 0,
-            "y": 11,
+            "y": 17,
             "width": 12,
             "height": 7
           }
         }
-      ]
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
     }
   ],
   "uiSettings": {

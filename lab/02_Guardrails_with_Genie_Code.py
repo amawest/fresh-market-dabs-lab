@@ -1,4 +1,8 @@
 # Databricks notebook source
+# /// script
+# [tool.databricks.environment]
+# environment_version = "6"
+# ///
 # MAGIC %md
 # MAGIC # Module 2 · The guardrails DevOps owns (10 min)
 # MAGIC
@@ -31,7 +35,7 @@ show_file(".assistant_workspace_instructions.md")
 # MAGIC %md
 # MAGIC ## 2.2 · Ask Genie Code to restructure the job
 # MAGIC
-# MAGIC Open Genie Code (agent mode) from your Git folder and paste:
+# MAGIC Open Genie Code on your right sidebar and paste:
 # MAGIC
 # MAGIC ```
 # MAGIC Restructure the imported Job_02 job (resources/job_02_pl_store_kpi_alerts.job.yml and

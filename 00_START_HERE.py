@@ -3,6 +3,7 @@
 # [tool.databricks.environment]
 # environment_version = "6"
 # ///
+# DBTITLE 1,Welcome: CI/CD with Declarative Automation Bundles
 # MAGIC %md
 # MAGIC # Welcome: CI/CD with Declarative Automation Bundles
 # MAGIC
@@ -10,7 +11,7 @@
 # MAGIC test your own copy, and see how it gets to production through a pull request, automated checks, and an
 # MAGIC approval. Everything happens here in the workspace, with Genie Code. No terminal, no IDE.
 # MAGIC
-# MAGIC **Before you start:** you should be reading this from **your own Git folder**. If you're not, create it
+# MAGIC **Before you start:** you should be reading this from **your own Git folder in Databricks**. If you're not, create it
 # MAGIC first: **Workspace → Create → Git folder**, paste `https://github.com/christinasong97/fresh-market-dabs-lab`,
 # MAGIC and click **Create**. It opens on the `lab/start` branch, which is all you need for the whole lab.
 # MAGIC
@@ -72,10 +73,11 @@
 
 # COMMAND ----------
 
+# DBTITLE 1,Step 1 · Set up the lab environment
 # MAGIC %md
 # MAGIC ## Step 1 · Set up the lab environment
 # MAGIC
-# MAGIC This runs `devops/lab_setup/00_lab_setup` from your Git folder. It creates everything the lab needs that
+# MAGIC This runs `devops/lab_setup/00_lab_setup` from your Git folder in Databricks. It creates everything the lab needs that
 # MAGIC lives **outside** the bundle, and it's safe to run again:
 # MAGIC
 # MAGIC | Creates | Used for |

@@ -55,11 +55,12 @@ link(f"/jobs/{legacy.job_id}", "Open the job in the UI")
 
 # COMMAND ----------
 
+# DBTITLE 1,1.2 · Bring the job into your bundle
 # MAGIC %md
 # MAGIC ## 1.2 · Bring the job into your bundle
 # MAGIC
 # MAGIC **In the UI (preferred):** open the job (link above), open the **⋮** menu at the top right, and choose
-# MAGIC **View as code** (or **Edit as YAML**). Copy the YAML into a new file in your Git folder:
+# MAGIC **View as code** (or **Edit as YAML**). Copy the YAML into a new file in your Git folder in Databricks:
 # MAGIC `resources/job_02_pl_store_kpi_alerts.job.yml`. If your Deployments panel offers **Add existing job**, you can
 # MAGIC use that instead.
 # MAGIC
@@ -112,10 +113,11 @@ expect_files(["resources/job_02_pl_store_kpi_alerts.job.yml", "src/Job_02_Store_
 
 # COMMAND ----------
 
+# DBTITLE 1,1.4 · Deploy your copy
 # MAGIC %md
 # MAGIC ## 1.4 · Deploy your copy
 # MAGIC
-# MAGIC 1. Open **`databricks.yml`** in your Git folder. The **Deployments** panel (rocket icon) opens on the side.
+# MAGIC 1. Open **`databricks.yml`** in your Git folder in Databricks. The **Deployments** panel (rocket icon) opens on the side.
 # MAGIC 2. Choose target **`dev`**, click **Validate**, then **Deploy**.
 # MAGIC
 # MAGIC Validation passes: the YAML is valid. That doesn't mean it follows the team's rules.
